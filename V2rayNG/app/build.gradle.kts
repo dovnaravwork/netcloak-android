@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.v2ray.ang"
+    namespace = "win.netcloak.app"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.v2ray.ang"
+        applicationId = "win.netcloak.app"
         minSdk = 24
         targetSdk = 36
         versionCode = 725
