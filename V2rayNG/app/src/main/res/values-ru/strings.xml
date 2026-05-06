@@ -462,4 +462,8 @@
         <item>WebDAV</item>
     </string-array>
 
+    <string name="welcome_title">Добро пожаловать в NetCloak</string>
+    <string name="welcome_message">Для начала получите ссылку подписки в нашем Telegram-боте. После этого подключение настроится автоматически.</string>
+    <string name="welcome_get_subscription">Получить подписку</string>
+    <string name="welcome_skip">Пропустить</string>
 </resources>

@@ -104,6 +104,8 @@ class MainActivity : HelperBaseActivity(), NavigationView.OnNavigationItemSelect
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {
         }
+
+        showWelcomeIfFirstLaunch()
     }
 
     private fun setupViewModel() {
@@ -653,6 +655,33 @@ class MainActivity : HelperBaseActivity(), NavigationView.OnNavigationItemSelect
 
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun showWelcomeIfFirstLaunch() {
+        val prefs = getSharedPreferences("netcloak", MODE_PRIVATE)
+        if (prefs.getBoolean("welcome_shown", false)) return
+
+        val subs = MmkvManager.decodeSubscriptions()
+        val hasServers = subs.any { MmkvManager.decodeServerList(it.guid).isNotEmpty() }
+        if (hasServers) {
+            prefs.edit().putBoolean("welcome_shown", true).apply()
+            return
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.welcome_title)
+            .setMessage(R.string.welcome_message)
+            .setPositiveButton(R.string.welcome_get_subscription) { _, _ ->
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/NetCloakBot")))
+                } catch (_: Exception) {
+                }
+            }
+            .setNegativeButton(R.string.welcome_skip, null)
+            .setCancelable(true)
+            .show()
+
+        prefs.edit().putBoolean("welcome_shown", true).apply()
     }
 
     override fun onDestroy() {
